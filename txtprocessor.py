@@ -31,7 +31,6 @@ invoice_date = args.InvoiceDate
 
 def process_star_int(df,file_date,invoice_date):
     try:
-        print('header')
         df['BILL'] = df['BILL'] + ' ' + df['Unnamed: 8']
         df = df.drop(['Unnamed: 8'], axis = 1)
         df['FileDate'] = file_date
@@ -41,20 +40,17 @@ def process_star_int(df,file_date,invoice_date):
         print('no header')
         df['FileDate'] = file_date
         df['InvoiceDate'] = invoice_date
-        df.to_csv('output.csv', mode = 'a', index = False) # mode = a appends date to file
+        df.to_csv('output.csv', mode = 'a', index = False) 
 
-if invoice_type == 'starinterchange':
+def process_coop_int(df,file_date,invoice_date):
+    df['BILL'] = df['BILL'] + df['Unnamed: 3']
+    df = df.drop(['Unnamed: 3'], axis = 1)
+    df.to_csv('output.csv', mode = 'a', index = False) 
+
+if invoice_type == 'starint':
     df = pd.read_fwf(input_path)
     process_star_int(df,file_date,invoice_date)
 
-
-
-# if input_path[-4:] == '.csv':
-#     df = pd.read_csv(input_path)
-# elif input_path[-5:] == '.xlsx':
-#     df = pd.read_excel(input_path)
-# elif input_path[-4:] == '.txt':
-#     df = pd.read_csv(input_path)
-# else:
-#     print('{} is not a valid file type'.format(input_path))
-# print(df.head())
+elif  invoice_type == 'coopint':
+    df = pd.read_fwf(input_path)
+    process_coop_int(df,file_date,invoice_date)
