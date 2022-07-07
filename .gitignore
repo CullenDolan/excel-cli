@@ -1,8 +1,9 @@
 # data files
 *.csv
 *.xlsx
-*.txt
 *.xls
+
+files/
 
 coopint/
 
